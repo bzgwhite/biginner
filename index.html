@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SetTheme</title>
+    <style>
+        option:disabled{
+            display: none;
+        }
+        .ehehehehe {
+            background: url('./k.png');
+        }
+    </style>
+    <script>
+        let k_down = false;
+        let e_down = false;
+        let n_down = false;
+
+        addEventListener('DOMContentLoaded',function(){
+            changeMode();
+            setOriginalColor();
+            hiddenContents();
+        })
+        function changeMode(){
+            const selected = document.getElementById('theme')
+            selected.addEventListener('change',function(){
+                const selectedValue = selected.value;
+                const body = document.body;
+                if(selectedValue == 'light'){
+                    body.setAttribute('style','background:#fff; color:#000');
+                    document.getElementById('ownColorBox').setAttribute('style','display:none');
+                } else if (selectedValue == 'dark'){
+                    body.setAttribute('style','background:#111; color:#fff');
+                    document.getElementById('ownColorBox').setAttribute('style','display:none');
+                } else if (selectedValue == 'original'){
+                    document.getElementById('ownColorBox').setAttribute('style','display:initial');
+                } else if (selectedValue == 'special'){
+                    body.classList.add('ehehehehe')
+                }
+            })
+        }
+        function setOriginalColor(){
+            const originalInputBoxes = document.querySelectorAll('.originalColor');
+            const body = document.body;
+            originalInputBoxes.forEach(function(inputBox){
+                inputBox.addEventListener('change',function(e){
+                    const code = e.target.value;
+                    const id = e.target.id;
+                    if (checkColorCode(code)){
+                        if(id == 'colorCode'){
+                            body.setAttribute('style',`color:${code}`);
+                        } else if (id == 'backgroundCode'){
+                            body.setAttribute('style',`background:${code}`);
+                        }
+                    } else {
+                        alert('カラーコードが正しくありまけん。');
+                    }
+                });
+
+            });
+        }
+
+        function checkColorCode(code){
+            const regex = new RegExp(/(^#[0-9a-fA-F]{6}$|^#[0-9a-fA-F]{3}$)/);
+            if (regex.test(code) | code == '') return true;
+
+            return false;
+        }
+        function hiddenContents(){
+            addEventListener('keydown',function(e){
+                console.log(e.keyCode);
+                if (e.keyCode == 75){
+                    k_down = true;
+                } else if (e.keyCode == 69){
+                    e_down = true;
+                } else if (e.keyCode == 78){
+                    n_down = true;
+                }
+
+                if(k_down && e_down && n_down){
+                    document.getElementById('secret').disabled = false;
+                }
+            });
+        }
+    </script>
+</head>
+<body></body>
+    <h1>何を選ぶ？</h1>
+    <select name="" id="theme">
+        <option value="light">ライトモード</option>
+        <option value="dark">ダークモード</option>
+        <option value="original">わいが決める</option>
+        <option value="special" id="secret" disabled>隠し機能</option>
+    </select>
+    <div id="ownColorBox" style="display: none;">
+        <div><label>背景のカラーコードを選んでください<input type="text" class="originalColor" id="backgroundCode"></label></div>
+        <div><label>文字のカラーコードを選んでください<input type="text" class="originalColor" id="colorCode"></label></div>
+    </div>
+</body>
+</html>
