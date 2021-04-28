@@ -37,6 +37,7 @@
                 } else if (selectedValue == 'original'){
                     document.getElementById('ownColorBox').setAttribute('style','display:initial');
                 } else if (selectedValue == 'special'){
+                    body.removeAttribute('style');
                     body.classList.add('ehehehehe')
                 }
             })
@@ -70,7 +71,6 @@
         }
         function hiddenContents(){
             addEventListener('keydown',function(e){
-                console.log(e.keyCode);
                 if (e.keyCode == 75){
                     k_down = true;
                 } else if (e.keyCode == 69){
