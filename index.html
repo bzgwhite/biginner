@@ -18,72 +18,27 @@
         let e_down = false;
         let n_down = false;
 
+        // ページ読み込んだら実行
         addEventListener('DOMContentLoaded',function(){
             changeMode();
             setOriginalColor();
             hiddenContents();
         })
+        // 選択肢を切り替えたら実行
         function changeMode(){
-            const selected = document.getElementById('theme')
-            selected.addEventListener('change',function(){
-                const selectedValue = selected.value;
-                const body = document.body;
-                if(selectedValue == 'light'){
-                    body.setAttribute('style','background:#fff; color:#000');
-                    document.getElementById('ownColorBox').setAttribute('style','display:none');
-                } else if (selectedValue == 'dark'){
-                    body.setAttribute('style','background:#111; color:#fff');
-                    document.getElementById('ownColorBox').setAttribute('style','display:none');
-                } else if (selectedValue == 'original'){
-                    document.getElementById('ownColorBox').setAttribute('style','display:initial');
-                } else if (selectedValue == 'special'){
-                    body.classList.add('ehehehehe')
-                }
-            })
+
         }
+        // オリジナルカラーの実行
         function setOriginalColor(){
-            const originalInputBoxes = document.querySelectorAll('.originalColor');
-            const body = document.body;
-            originalInputBoxes.forEach(function(inputBox){
-                inputBox.addEventListener('change',function(e){
-                    const code = e.target.value;
-                    const id = e.target.id;
-                    if (checkColorCode(code)){
-                        if(id == 'colorCode'){
-                            body.setAttribute('style',`color:${code}`);
-                        } else if (id == 'backgroundCode'){
-                            body.setAttribute('style',`background:${code}`);
-                        }
-                    } else {
-                        alert('カラーコードが正しくありまけん。');
-                    }
-                });
 
-            });
         }
-
+        // カラーコードチェック
         function checkColorCode(code){
-            const regex = new RegExp(/(^#[0-9a-fA-F]{6}$|^#[0-9a-fA-F]{3}$)/);
-            if (regex.test(code) | code == '') return true;
-
             return false;
         }
+        // 秘密
         function hiddenContents(){
-            addEventListener('keydown',function(e){
-                console.log(e.keyCode);
-                if (e.keyCode == 75){
-                    k_down = true;
-                } else if (e.keyCode == 69){
-                    e_down = true;
-                } else if (e.keyCode == 78){
-                    n_down = true;
-                }
-
-                if(k_down && e_down && n_down){
-                    document.getElementById('secret').disabled = false;
-                }
-            });
-        }
+         }
     </script>
 </head>
 <body></body>
