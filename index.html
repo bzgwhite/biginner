@@ -46,18 +46,21 @@
             const originalInputBoxes = document.querySelectorAll('.originalColor');
             const body = document.body;
             originalInputBoxes.forEach(function(inputBox){
-                inputBox.addEventListener('change',function(e){
-                    const code = e.target.value;
-                    const id = e.target.id;
-                    if (checkColorCode(code)){
-                        if(id == 'colorCode'){
-                            body.setAttribute('style',`color:${code}`);
-                        } else if (id == 'backgroundCode'){
-                            body.setAttribute('style',`background:${code}`);
+                inputBox.addEventListener('change',function(){
+                    const backgroundCode = document.getElementById('backgroundCode').value;
+                    const colorCode = document.getElementById('colorCode').value;
+                    const codeList = [backgroundCode,colorCode];
+                    let style = '';
+                    for(let code of codeList){
+                        if (checkColorCode(code) == false && code != ''){
+                            alert('カラーコードが正しくありまけん。');
+                            return;
                         }
-                    } else {
-                        alert('カラーコードが正しくありまけん。');
+
+                    style += `color:${colorCode};`;
+                    style += `background:${backgroundCode};`;
                     }
+                    body.setAttribute('style',style);
                 });
 
             });
